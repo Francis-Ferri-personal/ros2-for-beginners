@@ -4,12 +4,12 @@
 using std::placeholders::_1;
 using std::placeholders::_2;
 
-class AddTwoIntsClientNode : public rclcpp::Node
+class NumberCounterNode : public rclcpp::Node
 {
 public:
-    AddTwoIntsClientNode() : Node("add_two_ints_server")
+    NumberCounterNode() : Node("add_two_ints_server")
     {
-        server = this->create_service<example_interfaces::srv::AddTwoInts>("add_two_ints", std::bind(&AddTwoIntsClientNode::callbackAddTwoInts, this, _1, _2));
+        server = this->create_service<example_interfaces::srv::AddTwoInts>("add_two_ints", std::bind(&NumberCounterNode::callbackAddTwoInts, this, _1, _2));
 
         RCLCPP_INFO(this -> get_logger(), "Service server has been started");
     }
@@ -29,7 +29,7 @@ private:
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<AddTwoIntsClientNode>();
+    auto node = std::make_shared<NumberCounterNode>();
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;

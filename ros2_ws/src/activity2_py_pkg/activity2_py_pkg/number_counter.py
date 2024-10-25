@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 import rclpy
 from rclpy.node import Node
+from typing import NamedTuple
 
 from example_interfaces.msg import Int64
+from example_interfaces.srv import Trigger
+
+class Response(NamedTuple):
+    success: bool
+    message: str
 
 
 class NumberCounterNode(Node):
@@ -19,8 +25,14 @@ class NumberCounterNode(Node):
 
         self.get_logger().info(f"Number counter {self.name_} has been started!")
 
+        self.server = self.create_service(
+            Trigger, "reset_counter", self.callback_reset_counter
+        )
+
+        self.get_logger().info(f"Reset counter service has been started!")
+
     def callback_number(self, msg):
-        self.get_logger().info("Number received: " +  str(msg.data))
+        self.get_logger().info("Number received: " + str(msg.data))
 
         self.counter_ += msg.data
 
@@ -31,6 +43,15 @@ class NumberCounterNode(Node):
         msg.data = self.counter_
         self.publisher_.publish(msg)
         self.get_logger().info("Counter: " + str(self.counter_))
+
+    def callback_reset_counter(self, _, response: Response):
+        self.counter_ = 0
+
+        response.success = True
+        response.message = "Counter reseted!"
+        self.get_logger().info(f"Counter reseted!")
+
+        return response
 
 
 def main(args=None):
