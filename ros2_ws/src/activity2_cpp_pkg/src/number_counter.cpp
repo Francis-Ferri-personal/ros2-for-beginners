@@ -1,14 +1,14 @@
 #include "rclcpp/rclcpp.hpp"
 #include "example_interfaces/msg/int64.hpp"
 
-class NumberCounterNode : public rclcpp::Node
+class AddTwoIntsClientNode : public rclcpp::Node
 {
 public:
-    NumberCounterNode() : Node("number_counter")
+    AddTwoIntsClientNode() : Node("number_counter")
     {
         counter_ = 0;
         // Alwyas use ("") and not ('')
-        subscriber_ = this->create_subscription<example_interfaces::msg::Int64>("number", 10, std::bind(&NumberCounterNode::callbackNumber, this, std::placeholders::_1));
+        subscriber_ = this->create_subscription<example_interfaces::msg::Int64>("number", 10, std::bind(&AddTwoIntsClientNode::callbackNumber, this, std::placeholders::_1));
         publisher_ = this->create_publisher<example_interfaces::msg::Int64>("number_count", 10);
 
         RCLCPP_INFO(this->get_logger(), "Number counter has been started");
@@ -39,7 +39,7 @@ private:
 int main(int argc, char **argv)
 {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<NumberCounterNode>();
+    auto node = std::make_shared<AddTwoIntsClientNode>();
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
