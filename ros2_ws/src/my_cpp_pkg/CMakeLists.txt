@@ -40,6 +40,8 @@ install(TARGETS
   add_two_ints_client_no_oop
   add_two_ints_client
   hw_status_publisher
+  battery
+  led_panel
   DESTINATION lib/${PROJECT_NAME}
 )
 

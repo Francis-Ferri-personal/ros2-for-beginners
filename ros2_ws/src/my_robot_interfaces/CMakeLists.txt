@@ -13,6 +13,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/HardwareStatus.msg"
   "srv/ComputeRectangleArea.srv"
   "msg/LedState.msg"
+  "msg/LedStateArray.msg"
   "srv/SetLed.srv"
 )
 
