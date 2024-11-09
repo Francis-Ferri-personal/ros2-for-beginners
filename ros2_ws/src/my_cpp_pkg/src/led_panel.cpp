@@ -5,8 +5,11 @@
 class LedPanelNode : public rclcpp::Node
 {
 public:
-    LedPanelNode() : Node("led_panel"), led_states_(3, 0)
+    LedPanelNode() : Node("led_panel")
     {
+        this -> declare_parameter("led_states", std::vector<int64_t>(3, 0));
+        led_states_ = this -> get_parameter("led_states").as_integer_array();
+
         led_states_publisher_ =
             this->create_publisher<my_robot_interfaces::msg::LedStateArray>("led_states", 10);
         led_states_timer_ =
