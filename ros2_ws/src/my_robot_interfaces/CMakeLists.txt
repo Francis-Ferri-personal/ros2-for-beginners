@@ -15,6 +15,10 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/LedState.msg"
   "msg/LedStateArray.msg"
   "srv/SetLed.srv"
+  "msg/Turtle.msg"
+  "msg/TurtleList.msg"
+  "msg/TurtleArray.msg"
+  "srv/CatchTurtle.srv"
 )
 
 ament_package()
